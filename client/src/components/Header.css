@@ -1,0 +1,12 @@
+.header{
+    height: 100px;
+    background-color: #f5ba13;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    color: white;
+    display: flex;
+    align-items: center;
+}
+.name{
+    font-size: xx-large;
+    margin-left: 5%;
+}
