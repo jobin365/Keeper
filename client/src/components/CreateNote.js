@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 export default function CreateNote(){
     return(
         <div className="noteContainer">
-        <Paper elevation={3} className="note">
+        <Paper elevation={2} className="note">
         <div className="noteTop">
         <TextField className="titleField" label="Title" variant="outlined"/>
             <Fab color="primary">
