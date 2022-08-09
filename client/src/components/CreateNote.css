@@ -1,4 +1,20 @@
+.noteContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
 .note{
-    width: 300px;
+    width: 400px;
     padding: 20px;
+}
+.noteTop{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.titleField{
+    width: 325px;
+}
+.noteField{
+    width: 400px;
 }
