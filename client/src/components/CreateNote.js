@@ -9,9 +9,8 @@ export default function CreateNote() {
   return (
     <div className="noteContainer">
       <Paper
-        elevation={5}
+        elevation={7}
         className="note"
-        style={{ backgroundColor: "#F0EABE" }}
       >
       <div className="fieldContainer">
       <TextField className="field" label="Title" variant="standard" />
