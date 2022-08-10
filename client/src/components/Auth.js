@@ -7,12 +7,17 @@ import Axios from "axios";
 import Alert from "@mui/material/Alert";
 import googleLogo from "./images/google.png";
 import LoadingBar from "react-top-loading-bar";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 export default function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [alignment, setAlignment] = React.useState("sign in");
+  const [realname, setRealname] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   function handleUsernameChange(event) {
     setUsername(event.target.value);
@@ -20,6 +25,18 @@ export default function Login(props) {
 
   function handlePasswordChange(event) {
     setPassword(event.target.value);
+  }
+
+  const handleAuthChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
+
+  function handleRealnameChange(event) {
+    setRealname(event.target.value);
+  }
+
+  function handleConfirmPasswordChange(event) {
+    setPasswordConfirm(event.target.value);
   }
 
   function handleLogin(event) {
@@ -80,13 +97,6 @@ export default function Login(props) {
     >
       <Paper
         elevation={3}
-        className="title"
-        style={{ backgroundColor: "#9A86A4", color: "white" }}
-      >
-        Login
-      </Paper>
-      <Paper
-        elevation={3}
         className="roltopContainer"
         style={{
           padding: "25px",
@@ -98,8 +108,30 @@ export default function Login(props) {
           marginBottom: "25px",
         }}
       >
+        <ToggleButtonGroup
+          color="primary"
+          value={alignment}
+          exclusive
+          onChange={handleAuthChange}
+        >
+          <ToggleButton value="sign in">Sign In</ToggleButton>
+          <ToggleButton value="sign up">Sign Up</ToggleButton>
+        </ToggleButtonGroup>
+        {alignment === "sign up" && (
+          <TextField
+            style={{ marginBottom: "20px", marginTop: "20px" }}
+            className="username"
+            label="Name"
+            value={realname}
+            onChange={handleRealnameChange}
+            variant="outlined"
+          />
+        )}
         <TextField
-          style={{ marginBottom: "20px" }}
+          style={{
+            marginBottom: "20px",
+            marginTop: alignment === "sign in" && "20px",
+          }}
           className="username"
           label="Email"
           value={username}
@@ -116,37 +148,40 @@ export default function Login(props) {
           variant="outlined"
           type="password"
         />
+        {alignment === "sign up" && (
+          <TextField
+            style={{ marginBottom: "20px" }}
+            className="password"
+            label="Confirm password"
+            value={passwordConfirm}
+            onChange={handleConfirmPasswordChange}
+            variant="outlined"
+            type="password"
+          />
+        )}
         <div className="lorButtons">
           <Button
             className="lorButton"
             variant="contained"
             onClick={handleLogin}
           >
-            Login
+            {alignment}
           </Button>
-          <Button
-            className="lorButton"
-            variant="contained"
-            onClick={handleRegister}
-          >
-            Register
-          </Button>
+          <a href="/auth/google" style={{ textDecoration: "none" }}>
+            {/* <a href="http://localhost:3001/auth/google" style={{textDecoration:"none"}}> */}
+            <Button
+              variant="outlined"
+              className="googleButton"
+            >
+              <img
+                style={{ width: "33px", height: "34px", marginRight: "10px" }}
+                src={googleLogo}
+                alt="Google"
+              ></img>
+              Google
+            </Button>
+          </a>
         </div>
-        <a href="/auth/google" style={{ textDecoration: "none" }}>
-          {/* <a href="http://localhost:3001/auth/google" style={{textDecoration:"none"}}> */}
-          <Button
-            variant="outlined"
-            className="googleButton"
-            style={{ marginTop: "20px" }}
-          >
-            <img
-              style={{ width: "33px", height: "34px", marginRight: "10px" }}
-              src={googleLogo}
-              alt="Google"
-            ></img>
-            Login with Google
-          </Button>
-        </a>
       </Paper>
       {showAlert ? <Alert severity="error">{errorMessage}</Alert> : null}
     </div>
