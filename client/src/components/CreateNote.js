@@ -1,22 +1,34 @@
 import React from "react";
-import Paper from '@mui/material/Paper';
+import Paper from "@mui/material/Paper";
 import "./CreateNote.css";
-import TextField from '@mui/material/TextField';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
+import TextField from "@mui/material/TextField";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 
-export default function CreateNote(){
-    return(
-        <div className="noteContainer">
-        <Paper elevation={2} className="note">
-        <div className="noteTop">
-        <TextField className="titleField" label="Title" variant="outlined"/>
-            <Fab color="primary">
-                <AddIcon/>
-            </Fab>
-        </div>
-            <TextField className="noteField" label="Note" variant="outlined" multiline minRows="5"/>
-        </Paper>
-        </div>
-    )
+export default function CreateNote() {
+  return (
+    <div className="noteContainer">
+      <Paper
+        elevation={5}
+        className="note"
+        style={{ backgroundColor: "#F0EABE" }}
+      >
+      <div className="fieldContainer">
+      <TextField className="field" label="Title" variant="standard" />
+      </div>
+      <div className="fieldContainer">
+      <TextField
+          className="field"
+          label="Note"
+          variant="standard"
+          multiline
+          minRows="5"
+        />
+      </div>
+        <Fab color="primary">
+          <AddIcon />
+        </Fab>
+      </Paper>
+    </div>
+  );
 }

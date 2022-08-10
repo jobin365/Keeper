@@ -8,14 +8,9 @@
     width: 400px;
     padding: 20px;
 }
-.noteTop{
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-}
-.titleField{
-    width: 325px;
-}
-.noteField{
+.field{
     width: 400px;
+}
+.fieldContainer{
+    margin-bottom: 20px;
 }
