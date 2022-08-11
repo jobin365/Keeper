@@ -28,7 +28,7 @@ export default function Login(props) {
   }
 
   const handleAuthChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
+    setAlignment(event.target.value);
   };
 
   function handleRealnameChange(event) {
@@ -40,7 +40,7 @@ export default function Login(props) {
   }
 
   function handleLogin(event) {
-    if (isValidEmail(username)) {
+    if (isValidEmail()&&passwordIsPresent()) {
       props.load.current.continuousStart();
       Axios.post("/login", { username: username, password: password })
         .then((res) => {
@@ -57,13 +57,12 @@ export default function Login(props) {
           props.load.current.complete();
         });
     } else {
-      setErrorMessage("Invalid Email");
       setShowAlert(true);
     }
   }
 
   function handleRegister(event) {
-    if (isValidEmail(username)) {
+    if (realnameIsPresent()&&isValidEmail()&&passwordIsPresent()&&isSamePassword()) {
       props.load.current.continuousStart();
       Axios.post("/register", { username: username, password: password }).then(
         (res) => {
@@ -77,13 +76,44 @@ export default function Login(props) {
         }
       );
     } else {
-      setErrorMessage("Invalid Email");
       setShowAlert(true);
     }
   }
 
-  function isValidEmail(email) {
-    return /\S+@\S+\.\S+/.test(email);
+  function isValidEmail() {
+    if(/\S+@\S+\.\S+/.test(username)){
+      return 1;
+    }else{
+      setErrorMessage("Invalid Email!");
+      return 0;
+    }
+  }
+
+  function isSamePassword(){
+    if(password===passwordConfirm){
+      return 1;
+    }else{
+      setErrorMessage("Passwords don't match!");
+      return 0;
+    }
+  }
+
+  function realnameIsPresent(){
+    if(realname!==""){
+      return 1;
+    }else{
+      setErrorMessage("Please enter your name!");
+      return 0;
+    }
+  }
+
+  function passwordIsPresent(){
+    if(password!==""){
+      return 1;
+    }else{
+      setErrorMessage("Please enter a password!");
+      return 0;
+    }
   }
 
   return (
@@ -92,7 +122,8 @@ export default function Login(props) {
         display: "flex",
         justifyContent: "center",
         flexWrap: "wrap",
-        width: "400px",
+        height:"70vh",
+        alignItems:"center"
       }}
     >
       <Paper
@@ -163,7 +194,7 @@ export default function Login(props) {
           <Button
             className="lorButton"
             variant="contained"
-            onClick={handleLogin}
+            onClick={alignment==="sign in"?handleLogin:handleRegister}
           >
             {alignment}
           </Button>
