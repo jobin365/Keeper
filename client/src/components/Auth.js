@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import Axios from "axios";
 import Alert from "@mui/material/Alert";
 import googleLogo from "./images/google.png";
-import LoadingBar from "react-top-loading-bar";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
@@ -45,7 +44,9 @@ export default function Login(props) {
       Axios.post("/login", { username: username, password: password })
         .then((res) => {
           if (res.data.login === "success") {
-            props.checkStatus();
+            // props.checkStatus();
+            console.log(res.data);
+            props.load.current.complete();
           } else {
             setErrorMessage(res.data.error);
             setShowAlert(true);
@@ -64,14 +65,15 @@ export default function Login(props) {
   function handleRegister(event) {
     if (realnameIsPresent()&&isValidEmail()&&passwordIsPresent()&&isSamePassword()) {
       props.load.current.continuousStart();
-      Axios.post("/register", { username: username, password: password }).then(
+      Axios.post("/register", { username: username, password: password,realname:realname }).then(
         (res) => {
           if (res.data.register === "failed") {
             setErrorMessage(res.data.error);
             setShowAlert(true);
             props.load.current.complete();
           } else {
-            props.checkStatus();
+            // props.checkStatus();
+            console.log(res.data);
           }
         }
       );
@@ -122,7 +124,8 @@ export default function Login(props) {
         display: "flex",
         justifyContent: "center",
         flexWrap: "wrap",
-        alignItems:"center"
+        alignItems:"center",
+        flexDirection:"column"
       }}
     >
       <Paper
@@ -211,7 +214,7 @@ export default function Login(props) {
           </a>
         </div>
       </Paper>
-      {showAlert ? <Alert severity="error">{errorMessage}</Alert> : null}
+      {showAlert ? <Alert style={{marginTop:"20px"}} severity="error">{errorMessage}</Alert> : null}
     </div>
   );
 }
