@@ -122,7 +122,6 @@ export default function Login(props) {
         display: "flex",
         justifyContent: "center",
         flexWrap: "wrap",
-        height:"70vh",
         alignItems:"center"
       }}
     >
@@ -131,12 +130,10 @@ export default function Login(props) {
         className="roltopContainer"
         style={{
           padding: "25px",
-          margin: "25px 0 0",
           display: "flex",
           justifyContent: "space-evenly",
           alignItems: "center",
           flexWrap: "wrap",
-          marginBottom: "25px",
         }}
       >
         <ToggleButtonGroup

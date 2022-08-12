@@ -1,3 +1,7 @@
-.cardNote{
-    color:#A10035;
+.cardNote {
+  color: #a10035;
+}
+.noteContent {
+  text-align: justify;
+  text-justify: inter-word;
 }

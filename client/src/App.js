@@ -7,9 +7,15 @@ import Auth from "./components/Auth";
 import React, { useState, useEffect, useRef } from "react";
 
 function App() {
-  const [userLoggedin, setLogin] = useState(false);
+  const [userLoggedin, setLogin] = useState(true);
+  const loggedInStyles={
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"space-between",
+    height:"100vh"
+  }
   return (
-    <div className="App">
+    <div className="App" style={!userLoggedin?loggedInStyles:null}>
       <Header />
       {userLoggedin ? (
         <>
