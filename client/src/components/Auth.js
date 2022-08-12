@@ -44,9 +44,8 @@ export default function Login(props) {
       Axios.post("/login", { username: username, password: password })
         .then((res) => {
           if (res.data.login === "success") {
-            // props.checkStatus();
+            props.checkStatus();
             console.log(res.data);
-            props.load.current.complete();
           } else {
             setErrorMessage(res.data.error);
             setShowAlert(true);
@@ -72,7 +71,7 @@ export default function Login(props) {
             setShowAlert(true);
             props.load.current.complete();
           } else {
-            // props.checkStatus();
+            props.checkStatus();
             console.log(res.data);
           }
         }

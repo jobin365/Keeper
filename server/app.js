@@ -103,6 +103,14 @@ app.post("/login", (req, res) => {
   });
 });
 
+app.get("/checkLoginStatus", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.send({ status: true, username: req.user.username });
+  } else {
+    res.send({ status: false });
+  }
+});
+
 app.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {

@@ -22,6 +22,21 @@ function App() {
   Axios.defaults.baseURL = "http://localhost:3001";
   Axios.defaults.withCredentials = true;
 
+  useEffect(()=>{
+    ref.current.continuousStart();
+    checkLoginStatus();
+  },[]);
+
+  function checkLoginStatus(){
+    Axios.get("/checkLoginStatus",{ withCredentials: true }).then((res)=>{
+      setLogin(res.data.status);
+      // if(res.data.status){
+      //   setUsername(res.data.username);
+      // }
+      ref.current.complete();
+    });
+  }
+
   return (
     <div className="App" style={!userLoggedin?loggedInStyles:null}>
       <LoadingBar color='#f11946' ref={ref} />
@@ -32,7 +47,7 @@ function App() {
           <Notes />
         </>
       ) : (
-        <Auth load={ref}/>
+        <Auth load={ref} checkStatus={checkLoginStatus}/>
       )}
       <Footer login={!userLoggedin} />
     </div>
