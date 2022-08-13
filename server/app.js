@@ -63,6 +63,22 @@ passport.deserializeUser(function (user, cb) {
   });
 });
 
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      // callbackURL: "https://sleepy-ridge-02151.herokuapp.com/auth/google/secrets",
+      callbackURL:"http://localhost:3001/auth/google/keeper"
+    },
+    function (accessToken, refreshToken, profile, cb) {
+      User.findOrCreate({ googleId: profile.id,username:profile.emails[0].value,realname:profile.displayName }, function (err, user) {
+        return cb(err, user);
+      });
+    }
+  )
+);
+
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
@@ -120,6 +136,20 @@ app.get("/logout", (req, res) => {
     }
   });
 });
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile","email"] })
+);
+
+app.get(
+  "/auth/google/keeper",
+  passport.authenticate("google", { failureRedirect: "/" }),
+  function (req, res) {
+    res.redirect("http://localhost:3000");
+    // res.redirect("/");
+  }
+);
 
 app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening on port ${port}`);

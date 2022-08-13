@@ -197,8 +197,8 @@ export default function Login(props) {
           >
             {alignment}
           </Button>
-          <a href="/auth/google" style={{ textDecoration: "none" }}>
-            {/* <a href="http://localhost:3001/auth/google" style={{textDecoration:"none"}}> */}
+          {/* <a href="/auth/google" style={{ textDecoration: "none" }}> */}
+            <a href="http://localhost:3001/auth/google" style={{textDecoration:"none"}}>
             <Button
               variant="outlined"
               className="googleButton"
