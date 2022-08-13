@@ -5,8 +5,10 @@
     color: #FEC260;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 .name{
     font-size: xx-large;
-    margin-left: 5%;
 }

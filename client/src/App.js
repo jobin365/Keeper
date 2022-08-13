@@ -40,7 +40,7 @@ function App() {
   return (
     <div className="App" style={!userLoggedin?loggedInStyles:null}>
       <LoadingBar color='#f11946' ref={ref} />
-      <Header />
+      <Header checkLoginStatus={checkLoginStatus} load={ref}/>
       {userLoggedin ? (
         <>
           <CreateNote />
