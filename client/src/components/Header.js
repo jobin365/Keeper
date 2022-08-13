@@ -19,14 +19,14 @@ export default function Header(props) {
         Keeper
       </div>
       <div>
-        <Button
+        {props.userLoggedin&&<Button
           className="logoutButton"
           variant="contained"
           style={{ backgroundColor: "#D61C4E" }}
           onClick={logout}
         >
           Logout
-        </Button>
+        </Button>}
       </div>
     </div>
   );
