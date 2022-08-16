@@ -68,13 +68,20 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      // callbackURL: "https://sleepy-ridge-02151.herokuapp.com/auth/google/secrets",
-      callbackURL:"http://localhost:3001/auth/google/keeper"
+      // callbackURL: "https://sleepy-ridge-02151.herokuapp.com/auth/google/keeper",
+      callbackURL: "http://localhost:3001/auth/google/keeper",
     },
     function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate({ googleId: profile.id,username:profile.emails[0].value,realname:profile.displayName }, function (err, user) {
-        return cb(err, user);
-      });
+      User.findOrCreate(
+        {
+          googleId: profile.id,
+          username: profile.emails[0].value,
+          realname: profile.displayName,
+        },
+        function (err, user) {
+          return cb(err, user);
+        }
+      );
     }
   )
 );
@@ -139,7 +146,7 @@ app.get("/logout", (req, res) => {
 
 app.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile","email"] })
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 app.get(
@@ -150,6 +157,22 @@ app.get(
     // res.redirect("/");
   }
 );
+
+app.get("/getAllNotes", (req, res) => {
+  if (req.isAuthenticated()) {
+    User.findById(req.user.id, (err, foundUser) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (foundUser) {
+          res.send(foundUser.notes);
+        }
+      }
+    });
+  } else {
+    res.send({ message: "Unauthenticated request" });
+  }
+});
 
 app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening on port ${port}`);

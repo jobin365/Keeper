@@ -10,6 +10,7 @@ import Axios from "axios";
 
 function App() {
   const [userLoggedin, setLogin] = useState(false);
+  const [emptyNotes,setEmpty]=useState(false);
   const loggedInStyles={
     display:"flex",
     flexDirection:"column",
@@ -33,18 +34,18 @@ function App() {
       // if(res.data.status){
       //   setUsername(res.data.username);
       // }
-      ref.current.complete();
+      (!res.data.status)&&ref.current.complete();
     });
   }
 
   return (
-    <div className="App" style={!userLoggedin?loggedInStyles:null}>
+    <div className="App" style={(!userLoggedin||emptyNotes)?loggedInStyles:null}>
       <LoadingBar color='#f11946' ref={ref} />
       <Header checkLoginStatus={checkLoginStatus} load={ref} userLoggedin={userLoggedin}/>
       {userLoggedin ? (
         <>
           <CreateNote />
-          <Notes />
+          <Notes load={ref} setEmpty={setEmpty}/>
         </>
       ) : (
         <Auth load={ref} checkStatus={checkLoginStatus}/>
