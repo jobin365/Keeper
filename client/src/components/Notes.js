@@ -10,22 +10,24 @@ import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
 
 export default function Notes(props) {
-  const [notes, setNotes] = useState([]);
-  useEffect(() => {
-    Axios.get("/getAllNotes").then((res) => {
-      props.load.current.complete();
-      setNotes(res.data);
-      console.log(res.data);
-      if (res.data.length === 0) {
-        props.setEmpty(true);
-      }
-    });
-  }, [props, props.load, props.setEmpty]);
-
   function checkEmptyNotes(response) {
     if (response.length === 0) {
       props.setEmpty(true);
     }
+  }
+
+  function handleDeleteIconClick(event) {
+    const noteId = event.currentTarget.value;
+    Axios.patch("/deleteNote", { id: noteId }).then((res) => {
+      let i = 0;
+      props.notes.forEach((element) => {
+        if (noteId === element._id) {
+          props.notes.splice(i, 1);
+          props.setNotes([...props.notes]);
+        }
+        i++;
+      });
+    });
   }
 
   return (
@@ -36,7 +38,7 @@ export default function Notes(props) {
       justifyContent="center"
       style={{ marginTop: "50px", marginBottom: "50px" }}
     >
-      {notes.map((note) => {
+      {props.notes.map((note) => {
         return (
           <Grid item key={uuidv4()}>
             <Card sx={{ width: 350 }}>
@@ -45,7 +47,11 @@ export default function Notes(props) {
                 <p className="noteContent">{note.content}</p>
               </CardContent>
               <CardActions>
-                <IconButton color="primary">
+                <IconButton
+                  color="primary"
+                  value={note._id}
+                  onClick={handleDeleteIconClick}
+                >
                   <DeleteIcon />
                 </IconButton>
               </CardActions>

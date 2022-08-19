@@ -174,6 +174,55 @@ app.get("/getAllNotes", (req, res) => {
   }
 });
 
+app.post("/addNote", (req, res) => {
+  if (req.isAuthenticated()) {
+    const newNote = {
+      title: req.body.title,
+      content: req.body.content,
+    };
+    User.findById(req.user.id, (err, foundUser) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (foundUser) {
+          foundUser.notes.push(newNote);
+          foundUser.save().then(() => {
+            res.send({ addNote: "success" });
+          });
+        }
+      }
+    });
+  } else {
+    res.send({ message: "Unauthenticated request" });
+  }
+});
+
+app.patch("/deleteNote", (req, res) => {
+  if (req.isAuthenticated()) {
+    User.findById(req.user.id, (err, foundUser) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (foundUser) {
+          const noteId = req.body.id;
+          let i = 0;
+          foundUser.notes.forEach((element) => {
+            if (noteId == element._id) {
+              foundUser.notes.splice(i, 1);
+              foundUser.save().then(() => {
+                res.send({ deleteNote: "success" });
+              });
+            }
+            i++;
+          });
+        }
+      }
+    });
+  } else {
+    res.send({ message: "Unauthenticated request" });
+  }
+});
+
 app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening on port ${port}`);
 });

@@ -11,6 +11,7 @@ import Axios from "axios";
 function App() {
   const [userLoggedin, setLogin] = useState(false);
   const [emptyNotes,setEmpty]=useState(false);
+  const [notes, setNotes] = useState([]);
   const loggedInStyles={
     display:"flex",
     flexDirection:"column",
@@ -28,6 +29,17 @@ function App() {
     checkLoginStatus();
   },[]);
 
+  useEffect(() => {
+    Axios.get("/getAllNotes").then((res) => {
+      ref.current.complete();
+      setNotes(res.data);
+      console.log(res.data);
+      if (res.data.length === 0) {
+        setEmpty(true);
+      }
+    });
+  }, []);
+
   function checkLoginStatus(){
     Axios.get("/checkLoginStatus",{ withCredentials: true }).then((res)=>{
       setLogin(res.data.status);
@@ -44,8 +56,8 @@ function App() {
       <Header checkLoginStatus={checkLoginStatus} load={ref} userLoggedin={userLoggedin}/>
       {userLoggedin ? (
         <>
-          <CreateNote />
-          <Notes load={ref} setEmpty={setEmpty}/>
+          <CreateNote notes={notes} setNotes={setNotes}/>
+          <Notes load={ref} setEmpty={setEmpty} notes={notes} setNotes={setNotes}/>
         </>
       ) : (
         <Auth load={ref} checkStatus={checkLoginStatus}/>
