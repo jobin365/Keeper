@@ -33,7 +33,6 @@ function App() {
     Axios.get("/getAllNotes").then((res) => {
       ref.current.complete();
       setNotes(res.data);
-      console.log(res.data);
       if (res.data.length === 0) {
         setEmpty(true);
       }
@@ -56,7 +55,7 @@ function App() {
       <Header checkLoginStatus={checkLoginStatus} load={ref} userLoggedin={userLoggedin}/>
       {userLoggedin ? (
         <>
-          <CreateNote notes={notes} setNotes={setNotes}/>
+          <CreateNote notes={notes} setNotes={setNotes} setEmpty={setEmpty}/>
           <Notes load={ref} setEmpty={setEmpty} notes={notes} setNotes={setNotes}/>
         </>
       ) : (

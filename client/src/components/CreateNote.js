@@ -18,7 +18,7 @@ export default function CreateNote(props) {
   }
   function onAddClick(){
     Axios.post("/addNote",{title:title,content:content}).then((res)=>{
-      props.setNotes([...props.notes,{title:title,content:content}]);
+      props.setNotes([...props.notes,res.data]);
     })
   }
   return (

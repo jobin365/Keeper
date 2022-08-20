@@ -187,7 +187,7 @@ app.post("/addNote", (req, res) => {
         if (foundUser) {
           foundUser.notes.push(newNote);
           foundUser.save().then(() => {
-            res.send({ addNote: "success" });
+            res.send(foundUser.notes[foundUser.notes.length-1]);
           });
         }
       }

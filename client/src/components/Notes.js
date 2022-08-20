@@ -10,11 +10,13 @@ import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
 
 export default function Notes(props) {
-  function checkEmptyNotes(response) {
-    if (response.length === 0) {
+  useEffect(() => {
+    if (props.notes.length === 0) {
       props.setEmpty(true);
+    } else {
+      props.setEmpty(false);
     }
-  }
+  }, [props]);
 
   function handleDeleteIconClick(event) {
     const noteId = event.currentTarget.value;
