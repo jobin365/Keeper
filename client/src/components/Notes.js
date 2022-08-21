@@ -32,6 +32,18 @@ export default function Notes(props) {
     });
   }
 
+  function newlineToBreak(string) {
+    const stringSplitted = string.split("\n");
+    return stringSplitted.map((item) => {
+      return (
+        <span key={uuidv4()}>
+          {item}
+          <br/>
+        </span>
+      );
+    });
+  }
+  
   return (
     <Grid
       className="grid"
@@ -46,7 +58,7 @@ export default function Notes(props) {
             <Card sx={{ width: 350 }}>
               <CardContent className="cardNote">
                 <h4>{note.title}</h4>
-                <p className="noteContent">{note.content}</p>
+                <p className="noteContent">{newlineToBreak(note.content)}</p>
               </CardContent>
               <CardActions>
                 <IconButton
