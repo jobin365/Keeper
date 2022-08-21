@@ -158,6 +158,24 @@ app.get(
   }
 );
 
+
+app.get("/realname", (req, res) => {
+  if (req.isAuthenticated()) {
+    User.findById(req.user.id, (err, foundUser) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (foundUser) {
+          res.send({realname:foundUser.realname});
+        }
+      }
+    });
+  } else {
+    res.send({ message: "Unauthenticated request" });
+  }
+});
+
+
 app.get("/getAllNotes", (req, res) => {
   if (req.isAuthenticated()) {
     User.findById(req.user.id, (err, foundUser) => {
