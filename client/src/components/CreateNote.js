@@ -6,6 +6,8 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import Axios from "axios";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import { IconButton } from "@mui/material";
+import ClearIcon from '@mui/icons-material/Clear';
 
 export default function CreateNote(props) {
   const [title, setTitle] = useState("");
@@ -29,6 +31,11 @@ export default function CreateNote(props) {
   const handleClickAway = () => {
     props.setOpen(false);
   };
+
+  function clearFields(){
+    setTitle("")
+    setContent("")
+  }
   return (
     <div className="noteContainer">
       <ClickAwayListener onClickAway={handleClickAway}>
@@ -55,10 +62,14 @@ export default function CreateNote(props) {
               value={content}
             />
           </div>
-          {props.open && (
+          {props.open && (<>
             <Fab color="primary" onClick={onAddClick}>
               <AddIcon />
             </Fab>
+            <IconButton color="primary" style={{marginLeft:"10px"}} onClick={clearFields}>
+              <ClearIcon/>
+            </IconButton>
+            </>
           )}
         </Paper>
       </ClickAwayListener>
