@@ -40,6 +40,7 @@ export default function CreateNote(props) {
                 label="Title"
                 variant="standard"
                 onChange={onTitleChange}
+                value={title}
               />
             </div>
           )}
@@ -51,6 +52,7 @@ export default function CreateNote(props) {
               multiline
               minRows={props.open?"5":"1"}
               onChange={onContentChange}
+              value={content}
             />
           </div>
           {props.open && (
