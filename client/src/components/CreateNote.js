@@ -45,7 +45,7 @@ export default function CreateNote(props) {
               <TextField
                 className="field"
                 label="Title"
-                variant="standard"
+                variant="outlined"
                 onChange={onTitleChange}
                 value={title}
               />
@@ -55,7 +55,7 @@ export default function CreateNote(props) {
             <TextField
               className="field"
               label="Note"
-              variant="standard"
+              variant="outlined"
               multiline
               minRows={props.open?"5":"1"}
               onChange={onContentChange}
