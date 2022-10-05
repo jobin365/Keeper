@@ -1,5 +1,5 @@
 # Keeper
-Create and save notes
+Create and save notes. Made using React, Express and MongoDB
 
 ![Screenshot 1](screenshot1.png)
 
