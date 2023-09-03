@@ -14,6 +14,15 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [open, setOpen] = useState(false);
 
+  const height = window.innerHeight;
+
+  const loggedOutStyles = {
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"center",
+    height:(height-140)
+  }
+
   const prod = false;
   const ref = useRef(null);
 
@@ -70,7 +79,9 @@ function App() {
           <br></br>
         </>
       ) : (
+      <div style={loggedOutStyles}>
         <Auth load={ref} checkStatus={checkLoginStatus} prod={prod} />
+      </div>
       )}
       <Footer login={!userLoggedin} />
     </div>
