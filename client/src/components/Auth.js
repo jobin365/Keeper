@@ -43,6 +43,7 @@ export default function Login(props) {
       props.load.current.continuousStart();
       Axios.post("/login", { username: username, password: password })
         .then((res) => {
+          props.load.current.complete();
           if (res.data.login === "success") {
             props.checkStatus();
             console.log(res.data);
@@ -66,6 +67,7 @@ export default function Login(props) {
       props.load.current.continuousStart();
       Axios.post("/register", { username: username, password: password,realname:realname }).then(
         (res) => {
+          props.load.current.complete();
           if (res.data.register === "failed") {
             setErrorMessage(res.data.error);
             setShowAlert(true);
@@ -198,7 +200,7 @@ export default function Login(props) {
             {alignment}
           </Button>
           {/* <a href="/auth/google" style={{ textDecoration: "none" }}> */}
-            <a href="http://localhost:3001/auth/google" style={{textDecoration:"none"}}>
+            <a href={props.prod?"/auth/google":"http://localhost:3001/auth/google"} style={{textDecoration:"none"}}>
             <Button
               variant="outlined"
               className="googleButton"
