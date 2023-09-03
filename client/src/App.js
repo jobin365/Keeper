@@ -15,15 +15,7 @@ function App() {
   const [open, setOpen] = useState(false);
 
   const prod = false;
-
-  const loggedInStyles = {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    height: "100vh",
-  };
   const ref = useRef(null);
-  const width = window.screen.width;
 
   // Axios.defaults.baseURL = "https://sleepy-ridge-02151.herokuapp.com";
   Axios.defaults.baseURL = prod
@@ -53,17 +45,7 @@ function App() {
   }
 
   return (
-    <div
-      className="App"
-      style={
-        !userLoggedin ||
-        emptyNotes ||
-        (!open && notes.length <= 2 && width < 700) ||
-        (!open && notes.length <= 4 && width > 700)
-          ? loggedInStyles
-          : null
-      }
-    >
+    <div className="App">
       <LoadingBar color="#f11946" ref={ref} />
       <Header
         checkLoginStatus={checkLoginStatus}
@@ -85,6 +67,7 @@ function App() {
             notes={notes}
             setNotes={setNotes}
           />
+          <br></br>
         </>
       ) : (
         <Auth load={ref} checkStatus={checkLoginStatus} prod={prod} />
