@@ -7,6 +7,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Avatar from "@mui/material/Avatar";
 import {lime}  from '@mui/material/colors';
 import Tooltip from '@mui/material/Tooltip';
+import { IconButton } from "@mui/material";
+
+const w = window.innerWidth;
 
 export default function Header(props) {
   const [realname,setRealname]=useState("");
@@ -31,21 +34,25 @@ export default function Header(props) {
         <HighlightIcon style={{ fontSize: "xx-large" }} />
         Keeper
       </div>
-      <div style={{display:"flex",justifyContent:"space-between",width:"180px"}}>
+      <div style={{display:"flex",justifyContent:"space-between"}}>
         {props.userLoggedin && (
           <>
           <Tooltip title={realname}>
-            <Avatar sx={{ bgcolor: lime[800] }}>{realname[0]}</Avatar>
+            <Avatar sx={{ bgcolor: lime[800],marginRight:"20px" }}>{realname[0]}</Avatar>
             </Tooltip>
-            <Button
+            {w>400?<Button
               className="logoutButton"
               variant="contained"
               style={{ backgroundColor: "#D61C4E" }}
               onClick={logout}
+              startIcon={<LogoutIcon/>}
             >
-              <LogoutIcon style={{ marginRight: "10px" }} />
               Logout
-            </Button>
+            </Button>:
+            <IconButton style={{ backgroundColor: "#D61C4E" ,color:"white"}} onClick={logout}>
+              <LogoutIcon/>
+            </IconButton>
+            }
           </>
         )}
       </div>

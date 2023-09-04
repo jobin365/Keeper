@@ -28,7 +28,7 @@ function App() {
 
   // Axios.defaults.baseURL = "https://sleepy-ridge-02151.herokuapp.com";
   Axios.defaults.baseURL = prod
-    ? "https://sleepy-ridge-02151.herokuapp.com"
+    ? "https://keeper-prod.onrender.com"
     : "http://localhost:3001";
   Axios.defaults.withCredentials = true;
 
